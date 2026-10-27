@@ -38,13 +38,13 @@ overfit，或一路漂移到訊號淹沒在雜訊裡。三個節點之間的其�
 | 審稿 | agent 加一個冷讀的外部模型 | 帶嚴重度的 findings；人裁決 |
 | 投稿 | 人 | 投稿包；人欠的待辦清空 |
 
-## 稿件裡的數字是 render 出來的，不是打上去的
+## 稿件裡的每個數字都從凍結事實 render 出來
 
 <p align="center"><img src="docs/assets/architecture.zh-TW.svg" width="860" alt="工作區架構：identity 與 decisions 由人擁有；code space 派送進 experiments；experiments 凍結進 reality；reality render 進稿件；checker 驗證每一條箭頭"></p>
 
 - **code space** 是你任何一個 repo，用十二行 adapter 掛上。loop 用一道指令執行它，收割一份自帶
   provenance 的 `facts.json`。
-- **凍結**把事實複製進 `reality/`，每個檔一個 sha256。那裡的東西永不被編輯；更正是一個新 run
+- **凍結**把事實複製進 `reality/`，每個檔一個 sha256。凍結後的檔案保持原樣；更正是一個新 run
   加 errata 一行。
 - **render** 把你選用的事實編譯成 `manuscript/facts.tex`。prose 寫 `\fact{lane_rmse_tuned}`；手打的數字會讓 build 失敗。
 - **check** 驗證每一條箭頭：schema、凍結 hash、每條 claim 背後的 fact 錨點、裸數字、禁用術語、board 格子、懸空引用。
@@ -69,7 +69,7 @@ demo 跑的是 `examples/toy-pipeline`，一個假的 code space：模擬賽道�
 
 新實驗永遠會引出同一個問題：哪些句子、圖、claim 現在壓在一個過期的數字上。`tools/impact.py`
 從 facts map、稿件、圖的登記、claim map 回答它，`--apply` 把 facts map 換到新 run，下次 render
-就帶入新值。identity 的列只被列出、不被工具改寫：claim 的改動是人的決定。
+就帶入新值。identity 的列列給人處理；claim 的改動是人的決定。
 
 <p align="center"><img src="docs/assets/term-impact.svg" width="860" alt="impact.py 輸出：列出依賴被取代 run 的 facts-map key 與稿件行"></p>
 
@@ -96,8 +96,8 @@ provenance:
 preapproved_commands: ["make run *"]
 ```
 
-掛上一個 repo 只要求三件事：一道指令跑一個具名實驗、吐出帶 provenance 的事實、claim 不寫在自己的
-筆記裡。這些是可重現性的習慣，由 loop 而不是政策文件來要求。真實掛接的過程見
+掛上一個 repo 只要求三件事：一道指令跑一個具名實驗、吐出帶 provenance 的事實、claim 統一寫在
+`identity/`。這些是可重現性的習慣，loop 每一次 run 都會要求。真實掛接的過程見
 [docs/worked-example-pipeline.md](docs/worked-example-pipeline.md)。
 
 ## protocol 取代對話記憶
@@ -113,13 +113,11 @@ preapproved_commands: ["make run *"]
 `reviews/review-lenses.md`、`identity/venue-calibration.md`。其餘改成你的習慣，留下
 [CLAUDE.md](CLAUDE.md) 裡的不變量。
 
-## 從一次回顧長出來
+## 從三篇論文迭代出來
 
-這是作者橫跨三篇論文反覆迭代出來的工作方式的第三版，在第三篇論文從頭到尾走完第一代之後寫下。
-那一代暴露的缺陷：第八個月才抓到的手抄數字、實驗設計在 loop 之外、該是資料的地方寫成散文、
-被 agent 遊戲化的 ceremony，就是這版的設計輸入；[docs/lessons-learned.md](docs/lessons-learned.md)
-記錄它們，[docs/design.md](docs/design.md) 回答它們。這個 loop 能不能從新專案的第一天撐住，由
-下一篇論文來證明。
+這是作者橫跨三篇論文迭代出來的工作方式的第三版。上一版完整跑過第三篇論文；它的不足，手抄的數字、
+實驗設計在 loop 之外、該是資料的地方寫成散文、可被遊戲化的 ceremony，就是這一版的設計輸入。
+[docs/lessons-learned.md](docs/lessons-learned.md) 記錄它們，[docs/design.md](docs/design.md) 回答它們。
 
 路線圖與待辦：[docs/release-checklist.md](docs/release-checklist.md)。
 

@@ -43,14 +43,14 @@ the iteration underneath runs quickly and stays auditable.
 | Review | agent, plus a cold external model | findings with severity; the human adjudicates |
 | Submit | human | the package, with the human-owed queue empty |
 
-## Numbers in the manuscript are rendered, never typed
+## Every number in the manuscript is rendered from a frozen fact
 
 <p align="center"><img src="docs/assets/architecture.svg" width="860" alt="Workspace architecture: identity and decisions are human-owned; code spaces dispatch into experiments; experiments freeze into reality; reality renders into the manuscript; the checker verifies every arrow"></p>
 
 - A **code space** is any repo of yours, attached with a twelve-line adapter. The loop runs
   it with one command and harvests a `facts.json` that carries its own provenance.
-- **Freeze** copies the facts into `reality/` with a sha256 per file. Nothing there is ever
-  edited; a correction is a new run plus a line in the errata log.
+- **Freeze** copies the facts into `reality/` with a sha256 per file. Frozen files stay as
+  written; a correction is a new run plus a line in the errata log.
 - **Render** compiles the facts you chose into `manuscript/facts.tex`. Prose uses
   `\fact{lane_rmse_tuned}`; a typed numeral fails the build.
 - **Check** verifies every arrow: schemas, frozen hashes, fact anchors behind each claim,
@@ -78,8 +78,8 @@ run your analysis, in any domain.
 The question a new experiment always raises is which sentences, figures and claims now
 rest on a stale number. `tools/impact.py` answers it from the facts map, the manuscript, the
 figure registry and the claim map, and `--apply` remaps the facts map so the next render picks
-the new values up. Identity rows are listed but never rewritten by a tool: a changed claim
-is a human decision.
+the new values up. Identity rows are listed for the human to act on; a changed claim is a
+human decision.
 
 <p align="center"><img src="docs/assets/term-impact.svg" width="860" alt="impact.py output listing the facts-map keys and manuscript lines that depend on the superseded run"></p>
 
@@ -107,8 +107,8 @@ preapproved_commands: ["make run *"]
 ```
 
 Attaching a repo asks three things of it: run a named experiment from one command, emit
-facts with provenance, keep claims out of its own notes. Those are reproducibility habits,
-imposed by the loop rather than by a policy document. A real attachment is walked through in
+facts with provenance, keep its claims in `identity/`. Those are reproducibility habits, and
+the loop asks for them on every run. A real attachment is walked through in
 [docs/worked-example-pipeline.md](docs/worked-example-pipeline.md).
 
 ## Protocols replace conversational memory
@@ -126,15 +126,13 @@ The parts that belong to your taste are data files you fill: `identity/terminolo
 `identity/style-words.csv`, `reviews/review-lenses.md`, `identity/venue-calibration.md`.
 Change the rest to match your habits and keep the invariants in [CLAUDE.md](CLAUDE.md).
 
-## Built from a retrospective
+## Refined across three papers
 
-This is the third iteration of a way of working its author refined across three papers,
-written down after the third paper went through the first generation end to end. The
-defects that generation showed, hand-copied numbers caught in month eight, experiment
-design outside the loop, prose where data should have been, ceremony that got gamed, are
-the design inputs; [docs/lessons-learned.md](docs/lessons-learned.md) records them and
-[docs/design.md](docs/design.md) answers them. Whether the loop holds from the first day of
-a new project is what the next paper will show.
+This is the third version of a way of working its author iterated across three papers. The
+previous version ran the third paper end to end; its shortcomings, hand-copied numbers,
+experiment design outside the loop, facts kept as prose, ceremony that could be gamed, are
+the design inputs of this one. [docs/lessons-learned.md](docs/lessons-learned.md) records
+them and [docs/design.md](docs/design.md) answers them.
 
 Roadmap and open items: [docs/release-checklist.md](docs/release-checklist.md).
 
