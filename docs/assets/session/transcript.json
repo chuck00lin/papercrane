@@ -1,0 +1,436 @@
+[
+{
+"beat": "Design: the contract is pre-registered before anything runs"
+},
+{
+"pane": "head",
+"kind": "you",
+"text": "/design-review EXP-000-example"
+},
+{
+"pane": "head",
+"kind": "head",
+"text": "Stage: design · Experiment: EXP-000-example · Skill: skills/design-review.md"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "Authoritative: identity/claim-map.md, experiments/EXP-000-example/experiment.yaml"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "Excluded: tmp/, chat backups · Identity touch: none"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "Closing: tools/check.py --design passes and your decision is an ADR"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "python3 tools/check.py --design EXP-000-example"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": ""
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "0 failure(s), 0 warning(s)"
+},
+{
+"pane": "head",
+"kind": "head",
+"text": "C1 is targeted and allowed. The contrast has a control: the baseline controller on"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "the same twelve seeds. The reference protocol names the lane centre and says the"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "logger is blind to the controller. Dispatch baseline and tuned?"
+},
+{
+"pane": "head",
+"kind": "you",
+"text": "yes, baseline then tuned"
+},
+{
+"beat": "Run: head hands the work to the experiment agent over the file-queue bus"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "python3 tools/bus.py send --to experiment --task EXP-000-example-runs --from head --payload '{\"runs\": [[\"r01\",\"baseline\"],[\"r02\",\"tuned\"]], \"codespace\": \"example-pipeline-bus\"}'"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "6bbf973e6041"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/bus.py poll --agent experiment"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "{\"id\": \"6bbf973e6041\", \"ts\": \"2026-10-27T23:13:18+08:00\", \"from\": \"head\", \"to\": \"experiment\", \"task\": \"EXP-000-example-runs\", \"kind\": \"run\", \"payload\": {\"runs\": [[\"r01\", \"baseline\"], [\"r02\", \"tuned\"]], \"codespace\": \"example-pipeline-bus\"}, \"reply_to\": null}"
+},
+{
+"beat": "Run r01: dispatch → code space runs `make run` → ack → freeze"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/dispatch.py --experiment EXP-000-example --run r01 --config baseline --variant baseline --codespace example-pipeline-bus"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "[dispatch] enqueued task EXP-000-example-r01 for agent example-pipeline-bus (msg 6dd7bdcfab27); run stays `dispatched` until collected"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "[dispatch] wrote experiments/EXP-000-example/runs/r01/run.yaml"
+},
+{
+"pane": "codespace",
+"kind": "cmd",
+"text": "python3 tools/bus.py poll --agent example-pipeline-bus"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "{\"id\": \"6dd7bdcfab27\", \"ts\": \"2026-10-27T23:13:18+08:00\", \"from\": \"experiment\", \"to\": \"example-pipeline-bus\", \"task\": \"EXP-000-example-r01\", \"kind\": \"run\", \"payload\": {\"experiment\": \"EXP-000-example\", \"run_id\": \"r01\", \"command\": \"make run EXP=EXP-000-example RUN=r01 CFG=baseline\", \"cwd\": \".\", \"emit_facts_to\": \"runs/r01/facts.json\", \"closing_condition\": \"facts.json written and acked on the bus. Reply via: python3 tools/bus.py ack --agent example-pipeline-bus --id <msg-id>\"}, \"reply_to\": null}"
+},
+{
+"pane": "codespace",
+"kind": "cmd",
+"text": "make run EXP=EXP-000-example RUN=r01 CFG=baseline"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "make[1]: Entering directory 'examples/toy-pipeline'"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "[toy-pipeline] wrote runs/r01/facts.json  controller=baseline episodes=12"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "make[1]: Leaving directory 'examples/toy-pipeline'"
+},
+{
+"pane": "codespace",
+"kind": "cmd",
+"text": "python3 tools/bus.py ack --agent example-pipeline-bus --id 6dd7bdcfab27 --result '{\"facts\": \"runs/r01/facts.json\"}'"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "acked"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/bus.py wait --to experiment --task EXP-000-example-r01 --timeout 10"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "{\"ts\": \"2026-10-27T23:13:18+08:00\", \"type\": \"ack\", \"id\": \"6dd7bdcfab27\", \"from\": \"example-pipeline-bus\", \"to\": \"experiment\", \"task\": \"EXP-000-example-r01\"}"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/freeze.py examples/toy-pipeline/runs/r01/facts.json --run experiments/EXP-000-example/runs/r01/run.yaml"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "[freeze] reality/facts/EXP-000-example/r01.facts.json  sha256=b3a277e0fdfb…  5 fact(s)"
+},
+{
+"beat": "Run r02: dispatch → code space runs `make run` → ack → freeze"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/dispatch.py --experiment EXP-000-example --run r02 --config tuned --variant tuned --baseline r01 --change \"lateral gain retuned on T1\" --codespace example-pipeline-bus"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "[dispatch] enqueued task EXP-000-example-r02 for agent example-pipeline-bus (msg 92402e12afed); run stays `dispatched` until collected"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "[dispatch] wrote experiments/EXP-000-example/runs/r02/run.yaml"
+},
+{
+"pane": "codespace",
+"kind": "cmd",
+"text": "python3 tools/bus.py poll --agent example-pipeline-bus"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "{\"id\": \"92402e12afed\", \"ts\": \"2026-10-27T23:13:18+08:00\", \"from\": \"experiment\", \"to\": \"example-pipeline-bus\", \"task\": \"EXP-000-example-r02\", \"kind\": \"run\", \"payload\": {\"experiment\": \"EXP-000-example\", \"run_id\": \"r02\", \"command\": \"make run EXP=EXP-000-example RUN=r02 CFG=tuned\", \"cwd\": \".\", \"emit_facts_to\": \"runs/r02/facts.json\", \"closing_condition\": \"facts.json written and acked on the bus. Reply via: python3 tools/bus.py ack --agent example-pipeline-bus --id <msg-id>\"}, \"reply_to\": null}"
+},
+{
+"pane": "codespace",
+"kind": "cmd",
+"text": "make run EXP=EXP-000-example RUN=r02 CFG=tuned"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "make[1]: Entering directory 'examples/toy-pipeline'"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "[toy-pipeline] wrote runs/r02/facts.json  controller=tuned episodes=12"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "make[1]: Leaving directory 'examples/toy-pipeline'"
+},
+{
+"pane": "codespace",
+"kind": "cmd",
+"text": "python3 tools/bus.py ack --agent example-pipeline-bus --id 92402e12afed --result '{\"facts\": \"runs/r02/facts.json\"}'"
+},
+{
+"pane": "codespace",
+"kind": "out",
+"text": "acked"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/bus.py wait --to experiment --task EXP-000-example-r02 --timeout 10"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "{\"ts\": \"2026-10-27T23:13:19+08:00\", \"type\": \"ack\", \"id\": \"92402e12afed\", \"from\": \"example-pipeline-bus\", \"to\": \"experiment\", \"task\": \"EXP-000-example-r02\"}"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/freeze.py examples/toy-pipeline/runs/r02/facts.json --run experiments/EXP-000-example/runs/r02/run.yaml"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "[freeze] reality/facts/EXP-000-example/r02.facts.json  sha256=d3b236242576…  5 fact(s)"
+},
+{
+"beat": "Analyze: leaderboard, then the report goes back to head as questions"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/compare.py --experiment EXP-000-example --facts lane_rmse_cm,collisions"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "| run | variant  | baseline | commit   | lane_rmse_cm | collisions |"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "|-----|----------|----------|----------|--------------|------------|"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "| r01 | baseline | -        | fdbb2155 | 22.18 cm     | 2          |"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "| r02 | tuned    | r01      | fdbb2155 | 13.82 cm     | 0          |"
+},
+{
+"pane": "experiment",
+"kind": "cmd",
+"text": "python3 tools/bus.py ack --agent experiment --id 6bbf973e6041 --result '{\"frozen\": [\"r01\", \"r02\"]}'"
+},
+{
+"pane": "experiment",
+"kind": "out",
+"text": "acked"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "python3 tools/bus.py wait --to head --task EXP-000-example-runs --timeout 10"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "{\"ts\": \"2026-10-27T23:13:19+08:00\", \"type\": \"ack\", \"id\": \"6bbf973e6041\", \"from\": \"experiment\", \"to\": \"head\", \"task\": \"EXP-000-example-runs\"}"
+},
+{
+"pane": "head",
+"kind": "head",
+"text": "Both runs are frozen. Tuned: 13.8 cm mean lateral RMSE, 0 collisions. Baseline:"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "22.2 cm, 2 collisions, same seeds. Two questions for you, not conclusions:"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "does the paper carry r02 against r01, and is a drop of this size what you"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "expected on track T1?"
+},
+{
+"beat": "Interpret: the human decides; the decision becomes an ADR"
+},
+{
+"pane": "head",
+"kind": "you",
+"text": "yes on both. carry r02 vs r01. next run is a second track, same seeds."
+},
+{
+"pane": "head",
+"kind": "head",
+"text": "Drafting ADR-0001: decision, alternatives rejected, why. Writing it on your ok."
+},
+{
+"pane": "head",
+"kind": "you",
+"text": "ok"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "sed -n '10,14p' decisions/ADR-0001-carry-r02-vs-r01.md"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": ""
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "**Decision.** The paper carries the tuned controller (r02) against the baseline (r01) on track T1."
+},
+{
+"pane": "head",
+"kind": "out",
+"text": ""
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "**Alternatives rejected.** Report tuned alone (no contrast, the claim needs one). Wait for a second track before reporting (the second track is the next experiment, EXP-001)."
+},
+{
+"beat": "Write: render the facts, check, build"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "python3 tools/render-facts.py"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "[render-facts] wrote manuscript/facts.tex with 5 fact(s)"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "python3 tools/check.py"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": ""
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "0 failure(s), 0 warning(s)"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "make pdf"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "make[1]: Entering directory '/home/chucklab/github/papercrane'"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "… (5 more lines)"
+},
+{
+"pane": "head",
+"kind": "cmd",
+"text": "pdftotext manuscript/main.pdf - | sed -n '5,8p'"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "Results"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": ""
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "On track T1 the tuned lane-keeping controller held a mean lateral RMSE of 13.8 cm over 12 episodes"
+},
+{
+"pane": "head",
+"kind": "out",
+"text": "with 0 collisions, against 22.2 cm and 2 collisions for the baseline on the same seeds."
+},
+{
+"pane": "head",
+"kind": "head",
+"text": "Stage closed: ADR-0001 exists, the checker is green, the Results sentence reads its"
+},
+{
+"pane": "head",
+"kind": "head-cont",
+"text": "five numbers from facts.tex. Next: /design-review EXP-001 for the second track."
+},
+{
+"beat": "Done"
+}
+]

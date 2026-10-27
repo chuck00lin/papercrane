@@ -20,3 +20,4 @@ manuscript/facts.tex
 tests/__pycache__/
 .pytest_cache/
 .claude/skills/
+docs/assets/session/frames/

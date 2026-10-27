@@ -1,0 +1,17 @@
+name: example-pipeline-bus
+path: examples/toy-pipeline
+kind: pipeline
+description: The same toy pipeline, attached with a resident agent on the file-queue bus. Used by `make session` to show the three-pane loop.
+entry:
+  command: "make run EXP={experiment} RUN={run_id} CFG={config}"
+  cwd: .
+  env: system python3
+emits:
+  facts: "runs/{run_id}/facts.json"
+agent:
+  transport: bus
+  reply: "python3 tools/bus.py ack --agent example-pipeline-bus --id <msg-id>"
+provenance:
+  code_commit: "git rev-parse HEAD"
+  inputs: []
+preapproved_commands: ["make run *"]

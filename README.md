@@ -73,6 +73,18 @@ simulated track, baseline controller against a tuned one on the same seeds. Copy
 `codespaces/example-pipeline.yaml`, point it at your own repo, and the same five commands
 run your analysis, in any domain.
 
+## One session, three panes
+
+<p align="center"><img src="docs/assets/session.gif" width="900" alt="A simulated tmux session: you and the paper agent in the left pane, the experiment agent top right, the code-space agent bottom right, running one loop from design review to a rendered PDF"></p>
+
+You sit in the left pane with the paper agent and do the thinking: pre-register the design,
+read the report, decide, approve the decision record. The experiment agent in the top-right
+pane turns the loop: dispatch, wait, freeze, compare, report back as questions. The
+code-space agent in your own repository runs `make run` and acknowledges with a facts file.
+`make session` replays this on the toy pipeline with every command really run;
+[docs/session-walkthrough.md](docs/session-walkthrough.md) explains the eight beats and
+`tools/dev/tmux-session.sh` opens the three panes for your own paper.
+
 ## A new run tells you what it changes in the paper
 
 The question a new experiment always raises is which sentences, figures and claims now

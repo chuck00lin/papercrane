@@ -65,6 +65,16 @@ demo 跑的是 `examples/toy-pipeline`，一個假的 code space：模擬賽道�
 對上同一組 seed 的 tuned controller。複製 `codespaces/example-pipeline.yaml` 指向你自己的 repo，同樣五道
 指令就跑你的分析，任何領域都一樣。
 
+## 一個 session，三個 pane
+
+<p align="center"><img src="docs/assets/session.gif" width="900" alt="模擬的 tmux session：左邊是你與 paper agent，右上是 experiment agent，右下是 code-space agent，跑完一圈從設計審查到 render 出 PDF"></p>
+
+你坐在左邊的 pane 和 paper agent 做思考的事：預先登錄設計、讀報告、做決定、核可決策紀錄。右上的
+experiment agent 轉動 loop：派送、等待、凍結、比較、以問句回報。右下的 code-space agent 在你自己的
+repo 裡跑 `make run`，用一個 facts 檔 ack。`make session` 在玩具 pipeline 上重演這一圈，每道指令都真
+的跑；[docs/session-walkthrough.md](docs/session-walkthrough.md) 說明八個節拍，`tools/dev/tmux-session.sh`
+為你自己的論文開出這三個 pane。
+
 ## 新 run 會告訴你論文哪裡要改
 
 新實驗永遠會引出同一個問題：哪些句子、圖、claim 現在壓在一個過期的數字上。`tools/impact.py`

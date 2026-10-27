@@ -1,5 +1,5 @@
 #! papercrane helpers
-.PHONY: check render freeze status impact demo demo-clean pdf pdf-clean
+.PHONY: check render freeze status impact demo demo-clean pdf pdf-clean session session-clean
 
 check:
 	python3 tools/check.py
@@ -40,3 +40,13 @@ pdf:
 
 pdf-clean:
 	rm -f manuscript/main.aux manuscript/main.log manuscript/main.out manuscript/main.pdf manuscript/sections/*.aux
+
+# Simulate one three-pane session on the toy pipeline and render docs/assets/session.gif.
+session:
+	python3 examples/session/run_session.py
+	python3 tools/dev/render_session.py
+
+session-clean: demo-clean
+	rm -f decisions/ADR-0001-carry-r02-vs-r01.md
+	rm -rf bus/queue/*
+	: > bus/events.ndjson

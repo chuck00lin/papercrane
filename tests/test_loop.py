@@ -1,8 +1,6 @@
 """End-to-end test of the loop on the toy pipeline, in a scratch copy of the workspace."""
-import json, shutil, subprocess, sys
+import json, subprocess, sys
 from pathlib import Path
-
-import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 EXP = "EXP-000-example"
@@ -13,16 +11,6 @@ def run(ws, *args, ok=True):
     if ok:
         assert r.returncode == 0, r.stdout + r.stderr
     return r
-
-
-@pytest.fixture
-def ws(tmp_path):
-    dst = tmp_path / "ws"
-    shutil.copytree(ROOT, dst, ignore=shutil.ignore_patterns(".git", "__pycache__", "runs", "*.pdf", "facts.tex"))
-    subprocess.run(["git", "init", "-q"], cwd=dst, check=True)
-    subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "add", "-A"], cwd=dst, check=True)
-    subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "init"], cwd=dst, check=True)
-    return dst
 
 
 def dispatch(ws, run_id, cfg, variant, baseline=None):
