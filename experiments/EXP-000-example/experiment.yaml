@@ -1,0 +1,45 @@
+# Toy design contract. Replace with your first real experiment.
+id: EXP-000-example
+title: Does the pipeline's plant height agree with manual reference height?
+status: designed
+owner: researcher
+question: >
+  Across the measurement window, how closely does pipeline-estimated plant height track
+  manually measured height, and is any bias size-dependent?
+targets:
+  - claim: C1
+    needs: agreement metric (R2, RMSE, bias) between pipeline and manual height on an independent reference sample
+design:
+  units: one plant on one measurement day
+  n: 100
+  variables: [measurement_day, plant_id]
+  controls: []            # C3 is an agreement claim, not a comparison; no contrast needed
+  reference_protocol: >
+    Manual height from substrate surface to apex, vertical, laser rangefinder plus ruler,
+    recorded by a person who has not seen the pipeline output for that day.
+  confounds_accepted: [nutrient-row heterogeneity (described, never compared)]
+  window: "DAT 4-24, every two days"
+emits:
+  - name: height_r2
+    kind: metric
+    unit: null
+    definition: coefficient of determination, pipeline vs manual height, over the reference plant-days
+  - name: height_rmse
+    kind: metric
+    unit: cm
+    definition: root-mean-square error of pipeline minus manual height
+  - name: height_bias_slope
+    kind: metric
+    unit: null
+    definition: slope of residual against manual height; size-dependent bias
+  - name: n_reference
+    kind: count
+    unit: null
+    definition: number of plant-days with a manual reference
+acquisition_log:
+  - transplant date and sowing date
+  - inter-plant spacing (cm) and row layout
+  - whether reference height is vertical or along-stem
+  - who measured the reference and whether they saw pipeline output first
+  - first and last acquisition dates; any skipped day and why
+codespace: example-pipeline

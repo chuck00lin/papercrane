@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560" font-family="Inter, -apple-system, Segoe UI, Helvetica, Arial, Noto Sans CJK TC, PingFang TC, sans-serif">
+<rect width="1000" height="560" fill="#FFFFFF"/>
+<path d="M319.6,164.0 L405.2,222.0" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/><polygon points="405.2,222.0 393.3,220.0 398.9,211.7" fill="#94A3B8"/><rect x="238.8" y="182.0" width="107.2" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0"/><text x="292.4" y="197.5" text-anchor="middle" font-size="13" fill="#64748B">pre-register</text>
+<path d="M270.0,276.0 L360.0,276.0" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/><polygon points="360.0,276.0 349.0,281.0 349.0,271.0" fill="#94A3B8"/><rect x="276.6" y="245.0" width="76.8" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0"/><text x="315.0" y="260.5" text-anchor="middle" font-size="13" fill="#64748B">dispatch</text>
+<path d="M610.0,276.0 L690.0,276.0" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/><polygon points="690.0,276.0 679.0,281.0 679.0,271.0" fill="#94A3B8"/><rect x="619.2" y="245.0" width="61.6" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0"/><text x="650.0" y="260.5" text-anchor="middle" font-size="13" fill="#64748B">freeze</text>
+<path d="M815.0,330.0 L815.0,384.0" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/><polygon points="815.0,384.0 810.0,373.0 820.0,373.0" fill="#94A3B8"/><rect x="827.8" y="346.0" width="122.4" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0"/><text x="889.0" y="361.5" text-anchor="middle" font-size="13" fill="#64748B">render \fact{}</text>
+<path d="M600,164 L650,164 L650,357 L815,357 L815,384" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linejoin="round"/><polygon points="815,384 810.0,373.0 820.0,373.0" fill="#94A3B8"/><rect x="670.8" y="346" width="122.4" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0"/><text x="732" y="361.5" text-anchor="middle" font-size="13" fill="#64748B">claims + prose</text>
+<path d="M485.0,330.0 L485.0,384.0" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"/><polygon points="485.0,384.0 480.0,373.0 490.0,373.0" fill="#94A3B8"/><rect x="506.2" y="346.0" width="61.6" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0"/><text x="537.0" y="361.5" text-anchor="middle" font-size="13" fill="#64748B">status</text>
+<rect x="60" y="36" width="330" height="128" rx="12" fill="#FFFFFF" stroke="#E4573D" stroke-width="2"/>
+<path d="M72,36 h306 a12,12 0 0 1 12,12 v18 h-330 v-18 a12,12 0 0 1 12,-12 z" fill="#FFF1EC"/>
+<text x="74" y="57" font-size="14" font-weight="650" fill="#1E293B">identity/</text>
+<text x="376" y="57" text-anchor="end" font-size="12" fill="#E4573D">human-owned</text>
+<text x="74" y="86" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">story-spine.md   claim-map.md</text>
+<text x="74" y="104" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">method-trace.md  terminology.csv</text>
+<text x="74" y="122" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">venue-calibration.md</text>
+<rect x="420" y="36" width="210" height="128" rx="12" fill="#FFFFFF" stroke="#E4573D" stroke-width="2"/>
+<path d="M432,36 h186 a12,12 0 0 1 12,12 v18 h-210 v-18 a12,12 0 0 1 12,-12 z" fill="#FFF1EC"/>
+<text x="434" y="57" font-size="14" font-weight="650" fill="#1E293B">decisions/</text>
+<text x="616" y="57" text-anchor="end" font-size="12" fill="#E4573D">human-owned</text>
+<text x="434" y="86" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">ADR-0001-*.md</text>
+<text x="434" y="104" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">scenarios/</text>
+<rect x="660" y="36" width="280" height="128" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<path d="M672,36 h256 a12,12 0 0 1 12,12 v18 h-280 v-18 a12,12 0 0 1 12,-12 z" fill="#F4F7FA"/>
+<text x="674" y="57" font-size="14" font-weight="650" fill="#1E293B">skills/</text>
+<text x="926" y="57" text-anchor="end" font-size="12" fill="#64748B">one protocol per working mode</text>
+<text x="674" y="86" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">design-review  experiment-loop</text>
+<text x="674" y="104" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">claim-audit  integrity-check</text>
+<text x="674" y="122" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">shadow-reviewer  cold-review  polish</text>
+<rect x="60" y="222" width="210" height="108" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<path d="M72,222 h186 a12,12 0 0 1 12,12 v18 h-210 v-18 a12,12 0 0 1 12,-12 z" fill="#F4F7FA"/>
+<text x="74" y="243" font-size="14" font-weight="650" fill="#1E293B">codespaces/</text>
+<text x="256" y="243" text-anchor="end" font-size="12" fill="#64748B">your repos</text>
+<text x="74" y="272" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">my-pipeline.yaml</text>
+<text x="74" y="290" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">  entry: make run EXP= RUN=</text>
+<text x="74" y="308" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">  emits: runs/{run}/facts.json</text>
+<rect x="360" y="222" width="250" height="108" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<path d="M372,222 h226 a12,12 0 0 1 12,12 v18 h-250 v-18 a12,12 0 0 1 12,-12 z" fill="#F4F7FA"/>
+<text x="374" y="243" font-size="14" font-weight="650" fill="#1E293B">experiments/</text>
+<text x="596" y="243" text-anchor="end" font-size="12" fill="#64748B"></text>
+<text x="374" y="272" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">EXP-001/experiment.yaml</text>
+<text x="374" y="290" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">EXP-001/runs/r03/run.yaml</text>
+<text x="374" y="308" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">EXP-001/runs/r03/figures/</text>
+<rect x="690" y="222" width="250" height="108" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<path d="M702,222 h226 a12,12 0 0 1 12,12 v18 h-250 v-18 a12,12 0 0 1 12,-12 z" fill="#F4F7FA"/>
+<text x="704" y="243" font-size="14" font-weight="650" fill="#1E293B">reality/</text>
+<text x="926" y="243" text-anchor="end" font-size="12" fill="#64748B">immutable</text>
+<text x="704" y="272" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">facts/EXP-001/r03.facts.json</text>
+<text x="704" y="290" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">index.csv  (sha256 per file)</text>
+<text x="704" y="308" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">errata.md  (append-only)</text>
+<rect x="360" y="384" width="250" height="92" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<path d="M372,384 h226 a12,12 0 0 1 12,12 v18 h-250 v-18 a12,12 0 0 1 12,-12 z" fill="#F4F7FA"/>
+<text x="374" y="405" font-size="14" font-weight="650" fill="#1E293B">boards/</text>
+<text x="596" y="405" text-anchor="end" font-size="12" fill="#64748B"></text>
+<text x="374" y="434" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">evidence.csv  findings.csv</text>
+<text x="374" y="452" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">draft.csv  human-owed.csv</text>
+<rect x="690" y="384" width="250" height="92" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.4"/>
+<path d="M702,384 h226 a12,12 0 0 1 12,12 v18 h-250 v-18 a12,12 0 0 1 12,-12 z" fill="#F4F7FA"/>
+<text x="704" y="405" font-size="14" font-weight="650" fill="#1E293B">manuscript/</text>
+<text x="926" y="405" text-anchor="end" font-size="12" fill="#64748B"></text>
+<text x="704" y="434" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">facts.tex  (generated \fact{})</text>
+<text x="704" y="452" font-size="13" fill="#475569" font-family="SFMono-Regular, Menlo, Consolas, monospace">sections/*.tex  figures.yaml</text>
+<rect x="60" y="506" width="880" height="34" rx="10" fill="#0F172A"/>
+<text x="500" y="528" text-anchor="middle" font-size="13" fill="#E2E8F0" font-family="SFMono-Regular, Menlo, Consolas, monospace">tools/check.py · schema · freeze hash · fact anchors · bare numerals · terminology · boards · cross-refs</text>
+</svg>

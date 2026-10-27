@@ -1,0 +1,8 @@
+facts:
+  episodes:           {id: EXP-000-example.r02.episodes,        precision: 0}
+  lane_rmse_tuned:    {id: EXP-000-example.r02.lane_rmse_cm,    precision: 1}
+  lane_rmse_baseline: {id: EXP-000-example.r01.lane_rmse_cm,    precision: 1}
+  collisions_tuned:   {id: EXP-000-example.r02.collisions,      precision: 0}
+  collisions_baseline: {id: EXP-000-example.r01.collisions,     precision: 0}
+allow_literals:
+  - "^(19|20)[0-9]{2}$"

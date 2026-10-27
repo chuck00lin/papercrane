@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: If you use this workspace template or its protocols, please cite it.
+title: "papercrane: a human + agent research workspace from day one"
+version: 0.1.0
+date-released: 2026-10-27
+license: MIT
+repository-code: https://github.com/chuck00lin/papercrane
+authors:
+  - name: chuck00lin
+keywords: [research workflow, agent collaboration, reproducibility, manuscript, experiment registry]

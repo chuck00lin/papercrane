@@ -1,0 +1,17 @@
+name: example-pipeline
+path: examples/toy-pipeline     # relative to the workspace; real code spaces use absolute paths
+kind: pipeline
+description: The quickstart's fake pipeline. Copy this file and point it at your own repo.
+entry:
+  command: "make run EXP={experiment} CFG={config} RUN={run_id}"
+  cwd: .
+  env: system python3
+emits:
+  facts: "runs/{run_id}/facts.json"
+  plots: "runs/{run_id}/plots/"
+agent:
+  transport: none
+provenance:
+  code_commit: "git rev-parse HEAD"
+  inputs: ["data/{experiment}/**"]
+preapproved_commands: ["make run *"]

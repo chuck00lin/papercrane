@@ -1,0 +1,22 @@
+__pycache__/
+*.pyc
+.venv/
+# LaTeX build artifacts
+manuscript/*.aux
+manuscript/*.log
+manuscript/*.out
+manuscript/*.bbl
+manuscript/*.blg
+manuscript/*.fls
+manuscript/*.fdb_latexmk
+manuscript/*.pdf
+# raw experiment outputs live in the code space, not here
+experiments/*/runs/*/raw/
+# local scratch
+tmp/
+# bus message payloads can be large; keep the log and small messages, ignore attachments
+bus/queue/*/attachments/
+manuscript/facts.tex
+tests/__pycache__/
+.pytest_cache/
+.claude/skills/

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "papercrane/codespace",
+  "title": "Code-space adapter",
+  "type": "object",
+  "required": ["name", "path", "kind", "entry", "emits", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "path": {"type": "string"},
+    "kind": {"enum": ["pipeline", "analysis", "plotting", "compute"]},
+    "description": {"type": "string", "maxLength": 300},
+    "entry": {
+      "type": "object", "required": ["command"], "additionalProperties": false,
+      "properties": {"command": {"type": "string"}, "cwd": {"type": "string"}, "env": {"type": "string"}}
+    },
+    "emits": {
+      "type": "object", "required": ["facts"], "additionalProperties": false,
+      "properties": {"facts": {"type": "string"}, "plots": {"type": "string"}}
+    },
+    "agent": {
+      "type": "object", "additionalProperties": false,
+      "properties": {"transport": {"enum": ["bus", "none"]}, "reply": {"type": "string"}, "instructions": {"type": "string"}}
+    },
+    "provenance": {
+      "type": "object", "required": ["code_commit", "inputs"], "additionalProperties": false,
+      "properties": {"code_commit": {"type": "string"}, "inputs": {"type": "array", "items": {"type": "string"}}}
+    },
+    "preapproved_commands": {"type": "array", "items": {"type": "string"}, "description": "patterns the agent may run without a permission prompt; avoids silent stalls"}
+  }
+}

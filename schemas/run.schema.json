@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "papercrane/run",
+  "title": "Run record",
+  "type": "object",
+  "required": [
+    "run_id",
+    "experiment",
+    "codespace",
+    "command",
+    "code_commit",
+    "started",
+    "status",
+    "inputs"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^r[0-9]{2,}$"
+    },
+    "experiment": {
+      "type": "string"
+    },
+    "codespace": {
+      "type": "string"
+    },
+    "command": {
+      "type": "string"
+    },
+    "config": {
+      "type": "string",
+      "description": "path or inline summary of the configuration used"
+    },
+    "code_commit": {
+      "type": "string",
+      "minLength": 7
+    },
+    "env": {
+      "type": "string"
+    },
+    "started": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "exit_status": {
+      "type": "integer"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "facts_file": {
+      "type": "string"
+    },
+    "facts_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "dispatched_by": {
+      "enum": [
+        "human",
+        "experiment",
+        "head"
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "status": {
+      "enum": [
+        "dispatched",
+        "done",
+        "failed"
+      ],
+      "description": "dispatched = in flight (bus transport); done/failed set at collection"
+    },
+    "variant": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.-]*$",
+      "description": "short config-variant tag, e.g. default, ct06_ss; the leaderboard groups by it"
+    },
+    "baseline_run": {
+      "type": "string",
+      "description": "run id this variant is compared against"
+    },
+    "change_vs_baseline": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "task_id": {
+      "type": "string",
+      "description": "bus message id when dispatched through the file-queue"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "done"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "ended",
+          "exit_status"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "papercrane/experiment",
+  "title": "Experiment design contract",
+  "type": "object",
+  "required": ["id", "title", "status", "question", "targets", "design", "emits", "acquisition_log"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^EXP-[0-9]{3}[a-z0-9-]*$"},
+    "title": {"type": "string", "maxLength": 120},
+    "status": {"enum": ["designed", "running", "frozen", "abandoned", "superseded"]},
+    "supersedes": {"type": "string"},
+    "owner": {"type": "string", "description": "human responsible for Inspect verdicts"},
+    "question": {"type": "string", "maxLength": 400},
+    "targets": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["claim", "needs"], "additionalProperties": false,
+        "properties": {
+          "claim": {"type": "string", "description": "claim id in identity/claim-map.md, e.g. C2"},
+          "needs": {"type": "string", "maxLength": 300, "description": "what evidence this claim requires from this experiment"}
+        }
+      }
+    },
+    "design": {
+      "type": "object", "required": ["units", "n", "variables", "controls", "reference_protocol"],
+      "additionalProperties": false,
+      "properties": {
+        "units": {"type": "string", "description": "what one observation is"},
+        "n": {"type": "integer", "minimum": 1},
+        "variables": {"type": "array", "items": {"type": "string"}},
+        "controls": {"type": "array", "items": {"type": "string"}, "description": "one per contrast a targeted claim needs; may be empty only if no claim is comparative"},
+        "reference_protocol": {"type": "string", "description": "how ground truth / reference values are obtained, by whom, when, independently of the pipeline"},
+        "confounds_accepted": {"type": "array", "items": {"type": "string"}},
+        "window": {"type": "string"}
+      }
+    },
+    "emits": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["name", "kind", "definition"], "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "kind": {"enum": ["metric", "count", "date", "interval", "string", "table"]},
+          "unit": {"type": ["string", "null"]},
+          "definition": {"type": "string", "maxLength": 300}
+        }
+      }
+    },
+    "acquisition_log": {
+      "type": "array", "minItems": 1, "items": {"type": "string"},
+      "description": "facts that must be recorded at acquisition time because they cannot be recovered later"
+    },
+    "codespace": {"type": "string"},
+    "notes": {"type": "string"}
+  }
+}

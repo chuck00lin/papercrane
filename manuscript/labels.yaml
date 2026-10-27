@@ -1,0 +1,6 @@
+# Display labels and remaps. Every plotting script and the manuscript read this file.
+labels:
+  lateral_error_cm: "Lateral error (cm)"
+  episode: "Episode"
+  controller: "Controller"
+remaps: {}
