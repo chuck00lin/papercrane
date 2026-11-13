@@ -173,5 +173,4 @@ papercrane/
 ## Attribution and license
 
 Ideas credited in [ATTRIBUTION.md](ATTRIBUTION.md); the text here is original, and
-`tools/dev/overlap_check.py` is the release gate for that. License: to be set before the
-first public release.
+`tools/dev/overlap_check.py` is the release gate for that. License: [MIT](LICENSE).
