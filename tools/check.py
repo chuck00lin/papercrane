@@ -130,6 +130,7 @@ def check_experiments(only=None, codespaces=()):
                           for t in d.get("targets", []))
         if comparative and not d.get("design", {}).get("controls"):
             fail("design", where, "a target is comparative but design.controls is empty")
+        check_emits_contract(d, where)
         # runs
         for ry in sorted(exp_dir.glob("runs/*/run.yaml")):
             r = coerce_run(load_yaml(ry) or {})
@@ -140,6 +141,31 @@ def check_experiments(only=None, codespaces=()):
                 fail("schema", ry.relative_to(ROOT), "code_commit is unknown; the code space must be a git checkout")
             if r.get("experiment") != d.get("id"):
                 fail("cross-ref", ry.relative_to(ROOT), "run.experiment != experiment.id")
+
+
+def check_emits_contract(d, where):
+    """The design contract's emits[] against what the experiment's runs actually froze."""
+    declared = {e.get("name"): e for e in d.get("emits", []) if isinstance(e, dict)}
+    seen = set()
+    for p in sorted((ROOT / "reality" / "facts" / str(d.get("id"))).glob("*.facts.json")):
+        try:
+            doc = json.load(open(p))
+        except Exception:
+            continue                                   # check_reality reports unreadable files
+        for f in doc.get("facts", []):
+            name = f.get("name") or str(f.get("id", "")).rsplit(".", 1)[-1]
+            seen.add(name)
+            rel = p.relative_to(ROOT)
+            if name not in declared:
+                fail("design", where, f"{rel} froze fact {name!r}, which emits[] does not declare")
+                continue
+            for key in ("kind", "unit"):
+                if f.get(key) != declared[name].get(key):
+                    fail("design", where, f"{rel} froze {name!r} with {key} {f.get(key)!r}; emits[] declares {declared[name].get(key)!r}")
+    if seen:
+        for name in sorted(set(declared) - seen):
+            msg = f"emits[] declares {name!r}, which no frozen run has produced"
+            (fail if d.get("status") == "frozen" else warn)("design", where, msg)
 
 
 _FROZEN = None

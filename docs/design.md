@@ -232,7 +232,7 @@ equation constants, years). Everything else numeric in prose is a check failure.
 | schema | any `experiment.yaml`, `run.yaml`, `facts.json`, `codespaces/*.yaml`, or board CSV does not validate |
 | freeze | a file under `reality/facts/` differs from its hash in `reality/index.csv` |
 | anchors | a claim row cites a fact id that does not exist or is not frozen; a method-trace parameter has a literal value |
-| design | an experiment targets a claim listed as disallowed, or targets a claim with no fact it emits |
+| design | an experiment targets a claim listed as disallowed, or targets a claim with no fact it emits; a frozen run holds a fact that `emits[]` does not declare, or declares with a different kind or unit; an experiment marked `frozen` still declares a fact no run produced (a warning before that) |
 | numerals | a numeric literal in manuscript prose is neither a `\fact{}` nor allowlisted |
 | figures | a figure in `figures.yaml` names a missing file, a changed hash, or a fact id that is not frozen |
 | terminology | a forbidden term appears in manuscript text or in a figure label file |

@@ -156,4 +156,4 @@ papercrane/
 ## 致謝與授權
 
 想法來源列在 [ATTRIBUTION.md](ATTRIBUTION.md)；文字為原創，`tools/dev/overlap_check.py` 是這件事的
-發布門檻。授權：公開發布前決定。
+發布門檻。授權：[MIT](LICENSE)。
