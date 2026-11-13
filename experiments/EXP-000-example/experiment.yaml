@@ -1,45 +1,49 @@
-# Toy design contract. Replace with your first real experiment.
+# Toy design contract for the quickstart's lane-keeping pipeline (examples/toy-pipeline).
+# Replace with your first real experiment.
 id: EXP-000-example
-title: Does the pipeline's plant height agree with manual reference height?
+title: Does the tuned lane-keeping controller track the lane centre more closely than the baseline?
 status: designed
 owner: researcher
 question: >
-  Across the measurement window, how closely does pipeline-estimated plant height track
-  manually measured height, and is any bias size-dependent?
+  On simulated test track T1, with both controllers driven over the same seeds, how far does
+  each one stray from the lane centre, and how often does it collide or fail to finish the lap?
 targets:
   - claim: C1
-    needs: agreement metric (R2, RMSE, bias) between pipeline and manual height on an independent reference sample
+    needs: lateral error and collision count of the tuned controller compared with the baseline on the same track and seeds
 design:
-  units: one plant on one measurement day
-  n: 100
-  variables: [measurement_day, plant_id]
-  controls: []            # C3 is an agreement claim, not a comparison; no contrast needed
+  units: one simulated episode (one lap of track T1 for one seed)
+  n: 12
+  variables: [controller, seed]
+  controls: [baseline controller on the same track and the same seeds]
   reference_protocol: >
-    Manual height from substrate surface to apex, vertical, laser rangefinder plus ruler,
-    recorded by a person who has not seen the pipeline output for that day.
-  confounds_accepted: [nutrient-row heterogeneity (described, never compared)]
-  window: "DAT 4-24, every two days"
+    Lateral error is measured against the simulator's own lane-centre line, logged per
+    episode by the simulator and independent of either controller's internal estimate.
+  confounds_accepted: [single track geometry (T1 only; no claim about other tracks)]
+  window: "seeds 1-12, one lap each"
 emits:
-  - name: height_r2
-    kind: metric
-    unit: null
-    definition: coefficient of determination, pipeline vs manual height, over the reference plant-days
-  - name: height_rmse
-    kind: metric
-    unit: cm
-    definition: root-mean-square error of pipeline minus manual height
-  - name: height_bias_slope
-    kind: metric
-    unit: null
-    definition: slope of residual against manual height; size-dependent bias
-  - name: n_reference
+  - name: episodes
     kind: count
     unit: null
-    definition: number of plant-days with a manual reference
+    definition: simulated episodes (one lap of track T1 per seed) for this controller
+  - name: lane_rmse_cm
+    kind: metric
+    unit: cm
+    definition: mean over episodes of the per-episode RMSE of lateral error against the lane centre
+  - name: lane_max_cm
+    kind: metric
+    unit: cm
+    definition: largest lateral error observed in any episode
+  - name: collisions
+    kind: count
+    unit: null
+    definition: episodes that ended in a collision
+  - name: completion_rate
+    kind: metric
+    unit: null
+    definition: fraction of episodes that completed the lap
 acquisition_log:
-  - transplant date and sowing date
-  - inter-plant spacing (cm) and row layout
-  - whether reference height is vertical or along-stem
-  - who measured the reference and whether they saw pipeline output first
-  - first and last acquisition dates; any skipped day and why
+  - simulator version and track definition file used for T1
+  - the seed list, and confirmation that both controllers ran the same seeds
+  - controller parameter files for the baseline and the tuned variant
+  - any episode dropped or re-run, and why
 codespace: example-pipeline

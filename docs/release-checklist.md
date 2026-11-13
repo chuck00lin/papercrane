@@ -20,7 +20,7 @@ What stands between this repository and a public release. Status as of 2026-10-2
 | # | Item | Status |
 |---|------|--------|
 | 8 | `examples/toy-pipeline/`, `make demo`, `make pdf` (article-class shell compiles with the rendered sentence) | done |
-| 9 | `tests/test_loop.py` (7 tests over the toy loop) and `.github/workflows/check.yml` | done |
+| 9 | `tests/test_loop.py` (9 tests over the toy loop) and `.github/workflows/check.yml` | done |
 | 10 | `docs/quickstart.md`: toy loop, attach your code, write the identity and first contract, mount skills | done |
 | 11 | Skills reading order in README and `skills/README.md` | done |
 | 12 | `tools/mount-skills.py` and `docs/agent-runtimes.md` | done |

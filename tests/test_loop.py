@@ -61,6 +61,37 @@ def test_bare_numeral_fails_check(ws):
     assert "bare numeral '0.95'" in r.stdout
 
 
+def test_frozen_facts_match_design_contract(ws):
+    """The example contract declares exactly what the toy pipeline freezes."""
+    dispatch(ws, "r01", "baseline", "baseline")
+    import yaml
+    declared = {e["name"] for e in yaml.safe_load((ws / "experiments" / EXP / "experiment.yaml").read_text())["emits"]}
+    frozen = {f["name"] for f in json.loads((ws / "reality" / "facts" / EXP / "r01.facts.json").read_text())["facts"]}
+    assert declared == frozen
+    out = run(ws, "tools/check.py").stdout
+    assert "0 failure(s), 0 warning(s)" in out
+
+
+def test_undeclared_or_missing_emit_fails_check(ws):
+    dispatch(ws, "r01", "baseline", "baseline")
+    ey = ws / "experiments" / EXP / "experiment.yaml"
+    import yaml
+    contract = yaml.safe_load(ey.read_text())           # dispatch re-dumps the file, so edit it as data
+
+    def rewrite(target, **changes):
+        d = json.loads(json.dumps(contract))
+        next(e for e in d["emits"] if e["name"] == target).update(changes)
+        ey.write_text(yaml.safe_dump(d, sort_keys=False))
+
+    rewrite("collisions", name="near_misses")
+    r = run(ws, "tools/check.py", ok=False)
+    assert r.returncode == 1 and "froze fact 'collisions', which emits[] does not declare" in r.stdout
+    assert "[WARN] design" in r.stdout and "declares 'near_misses'" in r.stdout
+    rewrite("lane_max_cm", unit="m")
+    r = run(ws, "tools/check.py", ok=False)
+    assert r.returncode == 1 and "froze 'lane_max_cm' with unit 'cm'; emits[] declares 'm'" in r.stdout
+
+
 def test_impact_respects_variant_and_remaps(ws):
     dispatch(ws, "r01", "baseline", "baseline")
     dispatch(ws, "r02", "tuned", "tuned", baseline="r01")          # other variant: no impact
